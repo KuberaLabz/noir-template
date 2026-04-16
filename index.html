@@ -6,6 +6,7 @@
   <title>NOIR — Supper Club & Brasserie</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
@@ -533,6 +534,182 @@
     .cta-content .display-title { color: var(--cream) !important; }
     .cta-content .body-text     { color: rgba(242,237,228,0.6) !important; }
 
+  
+    /* ─── PHOSPHOR ICON SIZES ─── */
+    .exp-icon { font-size: 28px; color: var(--champagne); margin-bottom: 22px; display: block; line-height: 1; }
+    .reserve-info-icon { font-size: 20px; color: var(--champagne); flex-shrink: 0; margin-top: 2px; line-height: 1; }
+    .reserve-info-icon i { font-size: 20px; }
+
+  
+    /* ─── MENU ENTRY WITH IMAGE ─── */
+    .menu-entry { padding: 22px 28px; gap: 20px; align-items: center !important; }
+    .menu-entry-img {
+      width: 90px; height: 90px;
+      object-fit: cover;
+      flex-shrink: 0;
+      filter: brightness(0.88);
+      transition: transform 0.5s var(--ease-out), filter 0.4s ease;
+    }
+    .menu-entry:hover .menu-entry-img { transform: scale(1.06); filter: brightness(1); }
+    .menu-entry-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .add-to-order {
+      background: transparent;
+      border: 1px solid rgba(232,213,163,0.3);
+      color: var(--champagne);
+      font-family: var(--sans);
+      font-size: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
+    }
+    .add-to-order:hover {
+      background: var(--champagne);
+      border-color: var(--champagne);
+      color: var(--obsidian);
+    }
+
+    /* ─── ORDER BADGE ON NAV ─── */
+    .nav-order-badge {
+      position: absolute;
+      top: -5px; right: -5px;
+      width: 16px; height: 16px;
+      background: var(--rose);
+      border-radius: 50%;
+      font-size: 9px;
+      color: white;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--sans);
+    }
+
+    /* ─── CHAT WIDGET ─── */
+    .chat-toggle {
+      position: fixed; bottom: 32px; right: 32px;
+      width: 58px; height: 58px;
+      background: var(--champagne);
+      border: none; border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
+      box-shadow: 0 8px 32px rgba(232,213,163,0.25);
+      transition: transform 0.3s var(--ease-out), background 0.3s;
+    }
+    .chat-toggle:hover { transform: scale(1.08); background: var(--champ-pale); }
+    .chat-toggle i { font-size: 24px; color: var(--obsidian); }
+    .chat-badge {
+      position: absolute; top: -4px; right: -4px;
+      width: 18px; height: 18px;
+      background: var(--rose);
+      border-radius: 50%; font-size: 9px; color: white;
+      display: none; align-items: center; justify-content: center;
+      font-family: var(--sans); font-weight: 500;
+    }
+    .chat-window {
+      position: fixed; bottom: 108px; right: 32px;
+      width: 380px; height: 560px;
+      background: var(--dark1);
+      border: 1px solid rgba(232,213,163,0.15);
+      z-index: 9998;
+      display: flex; flex-direction: column;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+      transform: translateY(24px) scale(0.95);
+      opacity: 0; pointer-events: none;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+    }
+    .chat-window.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
+    .chat-header {
+      padding: 18px 22px;
+      background: var(--dark2);
+      border-bottom: 1px solid rgba(232,213,163,0.08);
+      display: flex; align-items: center; gap: 14px;
+    }
+    .chat-avatar {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--rose), var(--champagne));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif); font-size: 17px; color: var(--obsidian); font-weight: 600;
+    }
+    .chat-header-info h4 { font-size: 14px; color: var(--cream) !important; font-weight: 500; }
+    .chat-header-info p  { font-size: 11px; color: #4CAF50; margin-top: 1px; }
+    .chat-close {
+      margin-left: auto; background: none; border: none;
+      color: var(--muted); cursor: pointer; font-size: 20px; line-height: 1;
+      transition: color 0.2s; padding: 4px;
+    }
+    .chat-close:hover { color: var(--cream); }
+    .chat-messages {
+      flex: 1; overflow-y: auto; padding: 20px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .chat-messages::-webkit-scrollbar { width: 2px; }
+    .chat-messages::-webkit-scrollbar-thumb { background: var(--champagne); }
+    .msg { display: flex; flex-direction: column; max-width: 82%; }
+    .msg.bot  { align-self: flex-start; }
+    .msg.user { align-self: flex-end; }
+    .msg-bubble { padding: 11px 15px; font-size: 13px; line-height: 1.65; }
+    .msg.bot  .msg-bubble { background: var(--dark3); color: var(--cream); }
+    .msg.user .msg-bubble { background: var(--champagne); color: var(--obsidian); }
+    .msg-time { font-size: 10px; color: var(--muted); margin-top: 4px; padding: 0 3px; }
+    .msg.user .msg-time { text-align: right; }
+    .chat-suggestions {
+      padding: 10px 18px; display: flex; gap: 8px; flex-wrap: wrap;
+      border-top: 1px solid rgba(232,213,163,0.06);
+    }
+    .suggestion {
+      font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--champagne);
+      border: 1px solid rgba(232,213,163,0.22);
+      padding: 6px 12px; cursor: pointer;
+      background: none; font-family: var(--sans);
+      transition: background 0.25s, color 0.25s;
+      white-space: nowrap;
+    }
+    .suggestion:hover { background: rgba(232,213,163,0.08); }
+    .chat-input-area {
+      padding: 14px 18px;
+      border-top: 1px solid rgba(232,213,163,0.08);
+      display: flex; gap: 10px; align-items: center;
+    }
+    .chat-input {
+      flex: 1; background: var(--dark3) !important;
+      border: 1px solid rgba(232,213,163,0.12) !important;
+      color: var(--cream) !important;
+      padding: 11px 14px; font-size: 13px;
+      font-family: var(--sans); outline: none;
+      transition: border-color 0.3s;
+    }
+    .chat-input:focus  { border-color: rgba(232,213,163,0.4) !important; }
+    .chat-input::placeholder { color: var(--muted) !important; }
+    .chat-send {
+      width: 40px; height: 40px;
+      background: var(--champagne); border: none;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.25s; flex-shrink: 0;
+    }
+    .chat-send:hover { background: var(--champ-pale); }
+    .chat-send i { font-size: 17px; color: var(--obsidian); }
+    .typing-dots { display: flex; gap: 4px; padding: 4px 0; }
+    .typing-dots span {
+      width: 6px; height: 6px;
+      background: var(--champagne); border-radius: 50%;
+      animation: tdot 1.2s infinite;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes tdot { 0%,80%,100%{opacity:.2;transform:scale(.8)} 40%{opacity:1;transform:scale(1)} }
+    @media (max-width: 640px) { .chat-window { width: calc(100vw - 32px); right: 16px; } }
+
   </style>
 </head>
 <body>
@@ -649,9 +826,9 @@
   </section>
 
   <div class="experience-band">
-    <div class="exp-block"><span class="exp-icon">🕯️</span><div class="exp-title">Chef's Table</div><p class="exp-desc">Six seats. A direct view into the kitchen. The most intimate dining experience we offer — served in real time as each course is plated feet away from you.</p></div>
-    <div class="exp-block"><span class="exp-icon">🍷</span><div class="exp-title">Sommelier Pairing</div><p class="exp-desc">Our award-winning sommelier team has curated pairings for every tasting menu — from a focused 6-glass journey to an extended 10-glass exploration of our cellar.</p></div>
-    <div class="exp-block"><span class="exp-icon">🏛️</span><div class="exp-title">Private Dining</div><p class="exp-desc">The Vault — our private dining room for up to 16 guests — can be reserved for exclusive evenings, bespoke menus, and corporate entertainment of the highest order.</p></div>
+    <div class="exp-block"><i class="ph-fill ph-candle exp-icon"></i><div class="exp-title">Chef's Table</div><p class="exp-desc">Six seats. A direct view into the kitchen. The most intimate dining experience we offer — served in real time as each course is plated feet away from you.</p></div>
+    <div class="exp-block"><i class="ph-fill ph-wine exp-icon"></i><div class="exp-title">Sommelier Pairing</div><p class="exp-desc">Our award-winning sommelier team has curated pairings for every tasting menu — from a focused 6-glass journey to an extended 10-glass exploration of our cellar.</p></div>
+    <div class="exp-block"><i class="ph-fill ph-building-columns exp-icon"></i><div class="exp-title">Private Dining</div><p class="exp-desc">The Vault — our private dining room for up to 16 guests — can be reserved for exclusive evenings, bespoke menus, and corporate entertainment of the highest order.</p></div>
   </div>
 
   <section class="cta-section">
@@ -691,7 +868,13 @@
     <div class="menu-section active" id="ms-starters">
       <div class="menu-section-intro"><h2>To <em>Begin</em></h2><p>Our starters are designed to awaken — a progression of small, precise flavours that set the tone for the evening ahead.</p></div>
       <div class="menu-grid">
-        <div class="menu-entry"><div><div class="menu-entry-name">Hand-Dived Scallop</div><div class="menu-entry-desc">Celeriac purée, black truffle, champagne foam, crispy capers</div><div class="menu-entry-tags"><span class="tag">Signature</span><span class="tag">Gluten Free</span></div></div><div class="menu-entry-price">$48</div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=200&q=80" alt="Hand-Dived Scallop" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Hand-Dived Scallop</div><div class="menu-entry-desc">Celeriac purée, black truffle, champagne foam, crispy capers</div><div class="menu-entry-tags"><span class="tag">Signature</span><span class="tag">Gluten Free</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$48</div><button class="add-to-order" onclick="addToOrder('Hand-Dived Scallop',48)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200&q=80" alt="Seared Foie Gras" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Seared Foie Gras</div><div class="menu-entry-desc">Brioche perdu, Sauternes reduction, smoked cherry, gold leaf</div><div class="menu-entry-tags"><span class="tag">Signature</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$56</div><button class="add-to-order" onclick="addToOrder('Seared Foie Gras',56)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1558030006-450675393462?w=200&q=80" alt="Wagyu Beef Tartare" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Wagyu Beef Tartare</div><div class="menu-entry-desc">Périgord truffle, quail yolk, Dijon, toasted rye</div><div class="menu-entry-tags"><span class="tag">Raw</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$44</div><button class="add-to-order" onclick="addToOrder('Wagyu Beef Tartare',44)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?w=200&q=80" alt="Heirloom Tomato" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Heirloom Tomato</div><div class="menu-entry-desc">Burrata, basil oil, smoked anchovy, aged sherry vinegar</div><div class="menu-entry-tags"><span class="tag">Vegetarian</span><span class="tag">Seasonal</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$34</div><button class="add-to-order" onclick="addToOrder('Heirloom Tomato',34)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=200&q=80" alt="Langoustine Bisque" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Langoustine Bisque</div><div class="menu-entry-desc">Cognac, sea urchin butter, fennel, chive oil</div><div class="menu-entry-tags"><span class="tag">Gluten Free</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$38</div><button class="add-to-order" onclick="addToOrder('Langoustine Bisque',38)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200&q=80" alt="Beet &amp; Goat's Curd" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Beet &amp; Goat's Curd</div><div class="menu-entry-desc">Three varieties of roasted beet, pistachio praline, dill</div><div class="menu-entry-tags"><span class="tag">Vegetarian</span><span class="tag">Gluten Free</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$28</div><button class="add-to-order" onclick="addToOrder('Beet &amp; Goat's Curd',28)">+ Order</button></div></div>
+      </div>
         <div class="menu-entry"><div><div class="menu-entry-name">Seared Foie Gras</div><div class="menu-entry-desc">Brioche perdu, Sauternes reduction, smoked cherry, gold leaf</div><div class="menu-entry-tags"><span class="tag">Signature</span></div></div><div class="menu-entry-price">$56</div></div>
         <div class="menu-entry"><div><div class="menu-entry-name">Wagyu Beef Tartare</div><div class="menu-entry-desc">Périgord truffle, quail yolk, Dijon, toasted rye</div><div class="menu-entry-tags"><span class="tag">Raw</span></div></div><div class="menu-entry-price">$44</div></div>
         <div class="menu-entry"><div><div class="menu-entry-name">Heirloom Tomato</div><div class="menu-entry-desc">Burrata, basil oil, smoked anchovy, aged sherry vinegar</div><div class="menu-entry-tags"><span class="tag">Vegetarian</span><span class="tag">Seasonal</span></div></div><div class="menu-entry-price">$34</div></div>
@@ -702,7 +885,13 @@
     <div class="menu-section" id="ms-mains">
       <div class="menu-section-intro"><h2>Main <em>Courses</em></h2><p>Each main course is built around a single, exceptional protein — treated with absolute respect and precision.</p></div>
       <div class="menu-grid">
-        <div class="menu-entry"><div><div class="menu-entry-name">Kagoshima A5 Wagyu Ribeye</div><div class="menu-entry-desc">Bone marrow jus, pommes soufflées, black garlic, watercress</div><div class="menu-entry-tags"><span class="tag">Signature</span><span class="tag">Gluten Free</span></div></div><div class="menu-entry-price">$165</div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1544025162-d76694265947?w=200&q=80" alt="Kagoshima A5 Wagyu Ribeye" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Kagoshima A5 Wagyu Ribeye</div><div class="menu-entry-desc">Bone marrow jus, pommes soufflées, black garlic, watercress</div><div class="menu-entry-tags"><span class="tag">Signature</span><span class="tag">Gluten Free</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$165</div><button class="add-to-order" onclick="addToOrder('Kagoshima A5 Wagyu Ribeye',165)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1432139509613-5c4255815697?w=200&q=80" alt="Whole Roasted Duck" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Whole Roasted Duck</div><div class="menu-entry-desc">Cherry gastrique, confit leg, celeriac gratin, winter truffle</div><div class="menu-entry-tags"><span class="tag">For Two</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$190</div><button class="add-to-order" onclick="addToOrder('Whole Roasted Duck',190)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=200&q=80" alt="Dry-Aged Pigeon" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Dry-Aged Pigeon</div><div class="menu-entry-desc">Seared breast, foie gras ravioli, pea purée, jus gras</div><div class="menu-entry-tags"><span class="tag">Chef's Pick</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$92</div><button class="add-to-order" onclick="addToOrder('Dry-Aged Pigeon',92)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=200&q=80" alt="Truffle Risotto" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Truffle Risotto</div><div class="menu-entry-desc">Carnaroli, 36-month Parmigiano, Périgord truffle, chive</div><div class="menu-entry-tags"><span class="tag">Vegetarian</span><span class="tag">Signature</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$64</div><button class="add-to-order" onclick="addToOrder('Truffle Risotto',64)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=200&q=80" alt="Roasted Rack of Lamb" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Roasted Rack of Lamb</div><div class="menu-entry-desc">Herb crust, Provençal jus, white bean cassoulet, mint oil</div><div class="menu-entry-tags"><span class="tag">Gluten Free</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$115</div><button class="add-to-order" onclick="addToOrder('Roasted Rack of Lamb',115)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=200&q=80" alt="Veal Sweetbreads" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Veal Sweetbreads</div><div class="menu-entry-desc">Caramelised, sauce Grenobloise, capers, lemon, hazelnuts</div><div class="menu-entry-tags"><span class="tag">Classic</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$88</div><button class="add-to-order" onclick="addToOrder('Veal Sweetbreads',88)">+ Order</button></div></div>
+      </div>
         <div class="menu-entry"><div><div class="menu-entry-name">Whole Roasted Duck</div><div class="menu-entry-desc">Cherry gastrique, confit leg, celeriac gratin, winter truffle</div><div class="menu-entry-tags"><span class="tag">For Two</span></div></div><div class="menu-entry-price">$190</div></div>
         <div class="menu-entry"><div><div class="menu-entry-name">Dry-Aged Pigeon</div><div class="menu-entry-desc">Seared breast, foie gras ravioli, pea purée, jus gras</div><div class="menu-entry-tags"><span class="tag">Chef's Pick</span></div></div><div class="menu-entry-price">$92</div></div>
         <div class="menu-entry"><div><div class="menu-entry-name">Truffle Risotto</div><div class="menu-entry-desc">Carnaroli, 36-month Parmigiano, Périgord truffle, chive</div><div class="menu-entry-tags"><span class="tag">Vegetarian</span><span class="tag">Signature</span></div></div><div class="menu-entry-price">$64</div></div>
@@ -713,7 +902,11 @@
     <div class="menu-section" id="ms-seafood">
       <div class="menu-section-intro"><h2>From <em>the Sea</em></h2><p>Sourced daily from trusted fishermen on the northeast coast. Sustainability is not a talking point — it is a condition of supply.</p></div>
       <div class="menu-grid">
-        <div class="menu-entry"><div><div class="menu-entry-name">Butter-Poached Lobster</div><div class="menu-entry-desc">Champagne beurre blanc, sea herbs, caviar, finger lime</div><div class="menu-entry-tags"><span class="tag">Signature</span><span class="tag">Gluten Free</span></div></div><div class="menu-entry-price">$88</div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1546039907-7fa05f864c02?w=200&q=80" alt="Butter-Poached Lobster" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Butter-Poached Lobster</div><div class="menu-entry-desc">Champagne beurre blanc, sea herbs, caviar, finger lime</div><div class="menu-entry-tags"><span class="tag">Signature</span><span class="tag">Gluten Free</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$88</div><button class="add-to-order" onclick="addToOrder('Butter-Poached Lobster',88)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1510130387422-82bed34b37e9?w=200&q=80" alt="Côte de Sole" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Côte de Sole</div><div class="menu-entry-desc">Dover sole, brown butter, capers, samphire, champagne velouté</div><div class="menu-entry-tags"><span class="tag">Classic</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$76</div><button class="add-to-order" onclick="addToOrder('Côte de Sole',76)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=200&q=80" alt="Cornish Turbot" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Cornish Turbot</div><div class="menu-entry-desc">Smoked potato, razor clam, sea vegetable broth, dill oil</div><div class="menu-entry-tags"><span class="tag">Seasonal</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$82</div><button class="add-to-order" onclick="addToOrder('Cornish Turbot',82)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&q=80" alt="Oysters — Six Pieces" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Oysters — Six Pieces</div><div class="menu-entry-desc">Kumamoto, mignonette, tabasco cream, lemon</div><div class="menu-entry-tags"><span class="tag">Raw</span><span class="tag">Gluten Free</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$38</div><button class="add-to-order" onclick="addToOrder('Oysters — Six Pieces',38)">+ Order</button></div></div>
+      </div>
         <div class="menu-entry"><div><div class="menu-entry-name">Côte de Sole</div><div class="menu-entry-desc">Dover sole, brown butter, capers, samphire, champagne velouté</div><div class="menu-entry-tags"><span class="tag">Classic</span></div></div><div class="menu-entry-price">$76</div></div>
         <div class="menu-entry"><div><div class="menu-entry-name">Cornish Turbot</div><div class="menu-entry-desc">Smoked potato, razor clam, sea vegetable broth, dill oil</div><div class="menu-entry-tags"><span class="tag">Seasonal</span></div></div><div class="menu-entry-price">$82</div></div>
         <div class="menu-entry"><div><div class="menu-entry-name">Oysters — Six Pieces</div><div class="menu-entry-desc">Kumamoto, mignonette, tabasco cream, lemon</div><div class="menu-entry-tags"><span class="tag">Raw</span><span class="tag">Gluten Free</span></div></div><div class="menu-entry-price">$38</div></div>
@@ -722,7 +915,11 @@
     <div class="menu-section" id="ms-desserts">
       <div class="menu-section-intro"><h2>To <em>Finish</em></h2><p>Desserts at NOIR are not an afterthought. They are the final movement — composed with the same precision and intent as everything before.</p></div>
       <div class="menu-grid">
-        <div class="menu-entry"><div><div class="menu-entry-name">Valrhona Chocolate Sphere</div><div class="menu-entry-desc">Dark 72%, salted caramel centre, praline feuilletine, gold dust</div><div class="menu-entry-tags"><span class="tag">Signature</span><span class="tag">Gluten Free</span></div></div><div class="menu-entry-price">$32</div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=200&q=80" alt="Valrhona Chocolate Sphere" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Valrhona Chocolate Sphere</div><div class="menu-entry-desc">Dark 72%, salted caramel centre, praline feuilletine, gold dust</div><div class="menu-entry-tags"><span class="tag">Signature</span><span class="tag">Gluten Free</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$32</div><button class="add-to-order" onclick="addToOrder('Valrhona Chocolate Sphere',32)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=200&q=80" alt="Grand Marnier Soufflé" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Grand Marnier Soufflé</div><div class="menu-entry-desc">Crème anglaise, candied orange, served for two — 20 minutes</div><div class="menu-entry-tags"><span class="tag">Must Pre-Order</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$44</div><button class="add-to-order" onclick="addToOrder('Grand Marnier Soufflé',44)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=200&q=80" alt="Lemon Tarte Fine" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Lemon Tarte Fine</div><div class="menu-entry-desc">Compressed meringue, limoncello gel, candied zest, basil</div><div class="menu-entry-tags"><span class="tag">Seasonal</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$24</div><button class="add-to-order" onclick="addToOrder('Lemon Tarte Fine',24)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1452195100486-9cc805987862?w=200&q=80" alt="Artisan Cheese Board" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Artisan Cheese Board</div><div class="menu-entry-desc">5 cheeses, honeycomb, walnut bread, quince, dried fruit</div><div class="menu-entry-tags"><span class="tag">Pre-Order Advised</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$38</div><button class="add-to-order" onclick="addToOrder('Artisan Cheese Board',38)">+ Order</button></div></div>
+      </div>
         <div class="menu-entry"><div><div class="menu-entry-name">Grand Marnier Soufflé</div><div class="menu-entry-desc">Crème anglaise, candied orange, served for two — 20 minutes</div><div class="menu-entry-tags"><span class="tag">Must Pre-Order</span></div></div><div class="menu-entry-price">$44</div></div>
         <div class="menu-entry"><div><div class="menu-entry-name">Lemon Tarte Fine</div><div class="menu-entry-desc">Compressed meringue, limoncello gel, candied zest, basil</div><div class="menu-entry-tags"><span class="tag">Seasonal</span></div></div><div class="menu-entry-price">$24</div></div>
         <div class="menu-entry"><div><div class="menu-entry-name">Artisan Cheese Board</div><div class="menu-entry-desc">5 cheeses, honeycomb, walnut bread, quince, dried fruit</div><div class="menu-entry-tags"><span class="tag">Pre-Order Advised</span></div></div><div class="menu-entry-price">$38</div></div>
@@ -768,7 +965,13 @@
     <div class="menu-section" id="ms-drinks">
       <div class="menu-section-intro"><h2>Wine &amp; <em>Drinks</em></h2><p>Our cellar holds over 600 labels, with an emphasis on natural, biodynamic, and rare estate wines.</p></div>
       <div class="menu-grid">
-        <div class="menu-entry"><div><div class="menu-entry-name">NOIR Old Fashioned</div><div class="menu-entry-desc">Smoked bourbon, house bitters, demerara, charred orange</div><div class="menu-entry-tags"><span class="tag">Signature Cocktail</span></div></div><div class="menu-entry-price">$24</div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=200&q=80" alt="NOIR Old Fashioned" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">NOIR Old Fashioned</div><div class="menu-entry-desc">Smoked bourbon, house bitters, demerara, charred orange</div><div class="menu-entry-tags"><span class="tag">Signature Cocktail</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$24</div><button class="add-to-order" onclick="addToOrder('NOIR Old Fashioned',24)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=200&q=80" alt="Black Truffle Martini" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Black Truffle Martini</div><div class="menu-entry-desc">Grey Goose, dry vermouth, truffle tincture, lemon twist</div><div class="menu-entry-tags"><span class="tag">Signature Cocktail</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$28</div><button class="add-to-order" onclick="addToOrder('Black Truffle Martini',28)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1568213816046-0ee1c42bd559?w=200&q=80" alt="Krug Grande Cuvée" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Krug Grande Cuvée</div><div class="menu-entry-desc">By the glass · Complex, toasty, extraordinary</div><div class="menu-entry-tags"><span class="tag">Champagne</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$85</div><button class="add-to-order" onclick="addToOrder('Krug Grande Cuvée',85)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=200&q=80" alt="Domaine Leroy Chambolle-Musigny" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Domaine Leroy Chambolle-Musigny</div><div class="menu-entry-desc">1er Cru · Elegant, precise, profound</div><div class="menu-entry-tags"><span class="tag">Cellar Select</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$120</div><button class="add-to-order" onclick="addToOrder('Domaine Leroy Chambolle-Musigny',120)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=200&q=80" alt="Non-Alcoholic Pairing" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Non-Alcoholic Pairing</div><div class="menu-entry-desc">6-course botanical and juice pairing by our bar team</div><div class="menu-entry-tags"><span class="tag">Non-Alcoholic</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$85</div><button class="add-to-order" onclick="addToOrder('Non-Alcoholic Pairing',85)">+ Order</button></div></div>
+        <div class="menu-entry"><img class="menu-entry-img" src="https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=200&q=80" alt="Digestif Selection" loading="lazy" /><div class="menu-entry-info"><div class="menu-entry-name">Digestif Selection</div><div class="menu-entry-desc">Armagnac, Calvados, rare Cognac — with petits fours</div><div class="menu-entry-tags"><span class="tag">After Dinner</span></div></div><div class="menu-entry-right"><div class="menu-entry-price">$35</div><button class="add-to-order" onclick="addToOrder('Digestif Selection',35)">+ Order</button></div></div>
+      </div>
         <div class="menu-entry"><div><div class="menu-entry-name">Black Truffle Martini</div><div class="menu-entry-desc">Grey Goose, dry vermouth, truffle tincture, lemon twist</div><div class="menu-entry-tags"><span class="tag">Signature Cocktail</span></div></div><div class="menu-entry-price">$28</div></div>
         <div class="menu-entry"><div><div class="menu-entry-name">Krug Grande Cuvée</div><div class="menu-entry-desc">By the glass · Complex, toasty, extraordinary</div><div class="menu-entry-tags"><span class="tag">Champagne</span></div></div><div class="menu-entry-price">$85</div></div>
         <div class="menu-entry"><div><div class="menu-entry-name">Domaine Leroy Chambolle-Musigny</div><div class="menu-entry-desc">1er Cru · Elegant, precise, profound</div><div class="menu-entry-tags"><span class="tag">Cellar Select</span></div></div><div class="menu-entry-price">$120</div></div>
@@ -810,10 +1013,10 @@
       <h1 class="display-title" style="font-size:clamp(38px,5vw,60px)">Your<br>Evening<br><em>Awaits</em></h1>
       <p class="body-text" style="margin-top:22px">We recommend booking at least two weeks in advance for weekend seatings, and 30 days for the Chef's Table.</p>
       <div style="margin-top:44px">
-        <div class="reserve-info-item"><div class="reserve-info-icon">🕯️</div><div><div class="reserve-info-label">Opening Hours</div><div class="reserve-info-value">Tuesday – Sunday<br>First seating 6:00 PM · Last 9:30 PM</div></div></div>
-        <div class="reserve-info-item"><div class="reserve-info-icon">📍</div><div><div class="reserve-info-label">Location</div><div class="reserve-info-value">142 West 57th Street<br>New York, NY 10019</div></div></div>
-        <div class="reserve-info-item"><div class="reserve-info-icon">📞</div><div><div class="reserve-info-label">Phone</div><div class="reserve-info-value">+1 (212) 555 0190</div></div></div>
-        <div class="reserve-info-item"><div class="reserve-info-icon">✉️</div><div><div class="reserve-info-label">Email</div><div class="reserve-info-value">reservations@noirnyc.com</div></div></div>
+        <div class="reserve-info-item"><div class="reserve-info-icon"><i class="ph ph-clock"></i></div><div><div class="reserve-info-label">Opening Hours</div><div class="reserve-info-value">Tuesday – Sunday<br>First seating 6:00 PM · Last 9:30 PM</div></div></div>
+        <div class="reserve-info-item"><div class="reserve-info-icon"><i class="ph ph-map-pin"></i></div><div><div class="reserve-info-label">Location</div><div class="reserve-info-value">142 West 57th Street<br>New York, NY 10019</div></div></div>
+        <div class="reserve-info-item"><div class="reserve-info-icon"><i class="ph ph-phone"></i></div><div><div class="reserve-info-label">Phone</div><div class="reserve-info-value">+1 (212) 555 0190</div></div></div>
+        <div class="reserve-info-item"><div class="reserve-info-icon"><i class="ph ph-envelope-simple"></i></div><div><div class="reserve-info-label">Email</div><div class="reserve-info-value">reservations@noirnyc.com</div></div></div>
       </div>
     </div>
     <div class="reserve-right">
@@ -866,12 +1069,141 @@
       <div class="contact-detail"><div class="contact-detail-label">Reservations</div><div class="contact-detail-value">+1 (212) 555 0190</div><div class="contact-detail-sub">Available daily 10 AM – 10 PM.<br>Email: reservations@noirnyc.com</div></div>
       <div class="contact-detail"><div class="contact-detail-label">Opening Hours</div><div class="contact-detail-value">Tuesday – Sunday</div><div class="contact-detail-sub">First seating 6:00 PM · Last seating 9:30 PM<br>Closed Mondays. Private dining 7 days.</div></div>
       <div class="contact-detail"><div class="contact-detail-label">Private Events</div><div class="contact-detail-value">The Vault</div><div class="contact-detail-sub">Private dining room for up to 16 guests. Fully bespoke menus. Email events@noirnyc.com.</div></div>
-      <div class="contact-map-placeholder"><span>📍</span><p>142 W 57th St, New York</p></div>
+      <div class="contact-map-placeholder"><i class="ph ph-map-pin" style="font-size:32px;color:var(--champagne)"></i><p>142 W 57th St, New York</p></div>
     </div>
   </div>
 </div>
 
 <div id="toast"></div>
+
+
+<!-- ══════════════ CHAT WIDGET ══════════════ -->
+<button class="chat-toggle" onclick="toggleChat()" id="chatToggle" title="Ask our concierge">
+  <span class="chat-badge" id="chatBadge"></span>
+  <i class="ph-fill ph-chat-circle-text"></i>
+</button>
+
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">
+    <div class="chat-avatar">N</div>
+    <div class="chat-header-info">
+      <h4>NOIR Concierge</h4>
+      <p>&#9679; Online now</p>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">&#215;</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="msg bot">
+      <div class="msg-bubble">Welcome to NOIR. I'm your personal dining concierge. I can walk you through our menu, help place an order, or arrange your reservation. How may I assist you this evening?</div>
+      <div class="msg-time">Now</div>
+    </div>
+  </div>
+  <div class="chat-suggestions" id="chatSuggestions">
+    <button class="suggestion" onclick="sendSuggestion(this)">Tonight's menu</button>
+    <button class="suggestion" onclick="sendSuggestion(this)">Reserve a table</button>
+    <button class="suggestion" onclick="sendSuggestion(this)">Chef's special</button>
+  </div>
+  <div class="chat-input-area">
+    <input class="chat-input" id="chatInput" placeholder="Ask anything..." onkeypress="handleChatKey(event)" />
+    <button class="chat-send" onclick="sendMessage()">
+      <i class="ph ph-paper-plane-right"></i>
+    </button>
+  </div>
+</div>
+
+
+<script>
+// ─── ORDER SYSTEM ───
+const order = [];
+function addToOrder(item, price) {
+  order.push({ item, price });
+  showToast(item + ' added to your order');
+  const badge = document.getElementById('chatBadge');
+  badge.style.display = 'flex';
+  badge.textContent = order.length;
+  setTimeout(() => addBotMessage("I've added <strong>" + item + "</strong> ($" + price + ") to your order. Anything else, or shall I summarise your selection?"), 600);
+}
+
+// ─── CHAT ───
+let chatOpen = false;
+function toggleChat() {
+  chatOpen = !chatOpen;
+  const win = document.getElementById('chatWindow');
+  win.classList.toggle('open', chatOpen);
+  if (chatOpen) {
+    document.getElementById('chatBadge').style.display = 'none';
+    document.getElementById('chatInput').focus();
+  }
+}
+
+const aiR = {
+  menu:    "Our menu spans six curated categories — starters, mains, seafood, desserts, tasting menus, and drinks. Tonight's centrepiece is the Kagoshima A5 Wagyu Ribeye. Shall I walk you through a specific section?",
+  reserve: "I'd be delighted to arrange your reservation. Please visit our Reservations page, or share your preferred date, time, and party size and I'll note it for our team.",
+  special: "Chef Élise's focus this evening is on the Butter-Poached Lobster with champagne beurre blanc and Périgord caviar, followed by the A5 Wagyu. For dessert, the Valrhona Chocolate Sphere with tableside caramel pour is extraordinary.",
+  starter: "Our starters include the Hand-Dived Scallop with truffle foam ($48), Seared Foie Gras ($56), Wagyu Tartare ($44), and a Langoustine Bisque ($38). Each is designed to awaken the palate.",
+  dessert: "Our signature Valrhona Chocolate Sphere ($32) is incomparable — warm caramel poured tableside. We also offer a Grand Marnier Soufflé ($44, pre-order advised) and a refined Lemon Tarte Fine ($24).",
+  drink:   "Our bar programme features the NOIR Old Fashioned — smoked bourbon, house bitters ($24) — and the Black Truffle Martini ($28). Our cellar holds over 600 labels. Shall I recommend a pairing?",
+  tasting: "The Chef's Prestige Menu is 7 courses for $195 per person. Our Grand Dégustation is 10 courses for $295. Both evolve with the season. Wine pairings are available.",
+  hours:   "We are open Tuesday through Sunday. First seating at 6:00 PM, last seating at 9:30 PM. We are closed on Mondays. Private dining is available all week.",
+  allergy: "We take all dietary requirements with the utmost seriousness. Please inform us of any allergies — our kitchen will accommodate with care and precision.",
+  price:   "Starters range from $28–$56, mains from $64–$190, desserts from $24–$44. The 7-course Prestige Menu is $195, the Grand Dégustation $295 per person.",
+  orderSummary: function() {
+    if (order.length === 0) return "You haven't added anything yet. Browse the menu and tap '+ Order' on any dish.";
+    const total = order.reduce((s,o) => s+o.price, 0);
+    return "Your current order: " + order.map(o => o.item).join(', ') + ". Total: $" + total + ". Shall I finalise this for you?";
+  },
+  default: "Thank you for reaching out. I'm here for anything — our menu, tonight's specials, reservations, dietary requirements, or the wine list. How can I help?"
+};
+
+function getBotResponse(msg) {
+  const m = msg.toLowerCase();
+  if (m.includes('menu') || m.includes('food') || m.includes('eat')) return aiR.menu;
+  if (m.includes('reserv') || m.includes('book') || m.includes('table')) return aiR.reserve;
+  if (m.includes('special') || m.includes('tonight') || m.includes('recommend')) return aiR.special;
+  if (m.includes('starter') || m.includes('appetizer') || m.includes('begin')) return aiR.starter;
+  if (m.includes('dessert') || m.includes('sweet') || m.includes('chocolate')) return aiR.dessert;
+  if (m.includes('drink') || m.includes('wine') || m.includes('cocktail') || m.includes('bar')) return aiR.drink;
+  if (m.includes('tasting') || m.includes('course') || m.includes('prestige')) return aiR.tasting;
+  if (m.includes('hour') || m.includes('open') || m.includes('close') || m.includes('when')) return aiR.hours;
+  if (m.includes('allerg') || m.includes('dietary') || m.includes('vegetarian') || m.includes('gluten')) return aiR.allergy;
+  if (m.includes('price') || m.includes('cost') || m.includes('how much')) return aiR.price;
+  if (m.includes('order') || m.includes('cart') || m.includes('selection')) return aiR.orderSummary();
+  return aiR.default;
+}
+
+function addBotMessage(text) {
+  const msgs = document.getElementById('chatMessages');
+  const typing = document.createElement('div');
+  typing.className = 'msg bot';
+  typing.innerHTML = '<div class="msg-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>';
+  msgs.appendChild(typing);
+  msgs.scrollTop = msgs.scrollHeight;
+  setTimeout(() => {
+    typing.innerHTML = '<div class="msg-bubble">' + text + '</div><div class="msg-time">Now</div>';
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 1100);
+}
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const msgs = document.getElementById('chatMessages');
+  const u = document.createElement('div');
+  u.className = 'msg user';
+  u.innerHTML = '<div class="msg-bubble">' + text + '</div><div class="msg-time">Now</div>';
+  msgs.appendChild(u);
+  msgs.scrollTop = msgs.scrollHeight;
+  input.value = '';
+  document.getElementById('chatSuggestions').style.display = 'none';
+  setTimeout(() => addBotMessage(getBotResponse(text)), 380);
+}
+function sendSuggestion(btn) {
+  document.getElementById('chatInput').value = btn.textContent;
+  sendMessage();
+}
+function handleChatKey(e) { if (e.key === 'Enter') sendMessage(); }
+</script>
 
 </body>
 
