@@ -9,17 +9,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NOIR — Supper Club & Brasserie</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <style>
     :root {
       --obsidian:   #050505;
       --dark1:      #0C0C0C;
@@ -390,6 +379,159 @@
       .sig-card { flex: 0 0 290px; }
       .footer-top { grid-template-columns: 1fr; }
     }
+  
+    /* ═══════════════════════════════════
+       GLOBAL ELEMENT COLOR RESETS
+    ═══════════════════════════════════ */
+    h1, h2, h3, h4, h5, h6 { color: var(--cream); font-weight: 400; }
+    p   { color: rgba(242,237,228,0.62); }
+    label { color: var(--champagne); }
+    a   { color: inherit; text-decoration: none; }
+
+    /* ─── SELECT / OPTION DARK THEME ─── */
+    select, option {
+      background-color: var(--dark3) !important;
+      color: var(--cream) !important;
+    }
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='none' stroke='%23E8D5A3' stroke-width='1.5' stroke-linecap='round' d='M1 1l4 4 4-4'/%3E%3C/svg%3E") !important;
+      background-repeat: no-repeat !important;
+      background-position: right 16px center !important;
+      background-size: 10px !important;
+      padding-right: 40px !important;
+      -webkit-appearance: none !important;
+      appearance: none !important;
+      cursor: pointer;
+    }
+    input[type="date"] { color-scheme: dark; }
+    input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.7) opacity(0.6); cursor: pointer; }
+
+    /* ─── FORM INPUTS ENFORCED ─── */
+    .form-input, .form-select, .form-textarea {
+      background: var(--dark3) !important;
+      color: var(--cream) !important;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      background: #1c1c1c !important;
+      border-color: rgba(232,213,163,0.45) !important;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: #555 !important; }
+
+    /* ─── KITCHEN PAGE SPACING ─── */
+    #kitchen { padding-top: 84px !important; }
+    #gallery  { padding-top: 84px !important; }
+    .kitchen-hero { padding-top: 80px !important; min-height: 72vh; align-items: center !important; }
+
+    /* ─── GALLERY HEADER SPACING ─── */
+    .gallery-header { padding-top: 90px !important; margin-bottom: 8px; }
+
+    /* ─── MENU CLEANUP ─── */
+    .menu-body { padding: 72px 64px 120px !important; }
+    .menu-entry { align-items: center !important; }
+    .menu-entry-info { flex: 1; }
+    .menu-entry-name { color: var(--cream) !important; }
+    .menu-entry-desc { color: var(--muted2) !important; }
+    .menu-entry-price { color: var(--champagne) !important; font-family: var(--serif) !important; }
+
+    /* ─── TASTING CARDS ─── */
+    .t-name { color: var(--cream) !important; font-family: var(--serif); font-size: 28px; font-weight: 400; }
+    .t-meta { color: var(--muted) !important; font-size: 11px; letter-spacing: 1px; margin-top: 6px; }
+    .t-eyebrow { color: var(--rose) !important; font-size: 9px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; }
+    .t-price-num { color: var(--champagne) !important; font-family: var(--serif) !important; font-size: 44px !important; line-height: 1; }
+    .t-price-label { color: var(--muted) !important; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+    .t-course-num { color: var(--rose) !important; }
+    .t-course-name { color: var(--cream) !important; opacity: 0.85; font-size: 13px; }
+    .t-pairing { color: var(--muted) !important; font-size: 12px; line-height: 1.7; }
+    .t-pairing strong { color: var(--champagne) !important; font-weight: 400; }
+    .t-badge { background: var(--rose) !important; color: var(--cream) !important; }
+
+    /* ─── RESERVE / CONTACT SPACING ─── */
+    .reserve-left  { padding: 80px 64px !important; }
+    .reserve-right { padding: 80px 64px !important; }
+    .contact-left  { padding: 80px 64px !important; }
+    .contact-right { padding: 80px 64px !important; }
+    .reserve-info-label { color: var(--rose) !important; }
+    .reserve-info-value { color: var(--cream) !important; font-size: 14px; line-height: 1.6; }
+    .contact-detail-label { color: var(--rose) !important; }
+    .contact-detail-value { color: var(--cream) !important; }
+    .contact-detail-sub   { color: var(--muted2) !important; }
+
+    /* ─── NAV / FOOTER COLORS ─── */
+    .nav-links a  { color: var(--cream) !important; }
+    .footer-col h5 { color: var(--champagne) !important; }
+    .footer-col ul li a { color: var(--muted) !important; }
+    .footer-bottom p { color: var(--muted) !important; }
+    .social-links a { color: var(--muted) !important; }
+    .footer-brand p { color: var(--muted) !important; }
+
+    /* ─── STORY / CHEF / STAT ─── */
+    .story-panel-title { color: var(--cream) !important; }
+    .story-panel-text  { color: rgba(242,237,228,0.55) !important; }
+    .chef-quote  { color: var(--champagne) !important; }
+    .stat-value  { color: var(--champagne) !important; }
+    .stat-label  { color: var(--muted) !important; }
+    .award-pill  { color: var(--champagne) !important; }
+    .exp-title   { color: var(--cream) !important; }
+    .exp-desc    { color: var(--muted2) !important; }
+    .phil-block-title { color: var(--cream) !important; }
+    .phil-block-text  { color: var(--muted2) !important; }
+    .phil-block-num   { color: rgba(232,213,163,0.06) !important; }
+    .team-card-name   { color: var(--cream) !important; }
+    .team-card-bio    { color: rgba(242,237,228,0.6) !important; }
+    .sig-card-name    { color: var(--cream) !important; }
+    .sig-card-desc    { color: rgba(242,237,228,0.55) !important; }
+    .sig-card-price   { color: var(--champagne) !important; font-family: var(--serif) !important; }
+
+    /* ─── CONTACT MAP PLACEHOLDER ─── */
+    .contact-map-placeholder p { color: var(--muted) !important; }
+
+    /* ─── HERO ─── */
+    .hero-eyebrow { color: var(--rose) !important; }
+    .hero-body    { color: rgba(242,237,228,0.6) !important; }
+    .hero-headline { color: var(--cream) !important; }
+    .hero-headline em { color: var(--champagne) !important; }
+
+    /* ─── EYEBROW / DISPLAY TITLE / BODY TEXT GLOBAL ─── */
+    .eyebrow      { color: var(--rose) !important; }
+    .display-title { color: var(--cream) !important; }
+    .body-text    { color: rgba(242,237,228,0.6) !important; }
+    .text-link    { color: var(--champagne) !important; }
+
+    /* ─── MENU SECTION INTRO ─── */
+    .menu-section-intro h2 { color: var(--cream) !important; }
+    .menu-section-intro p  { color: var(--muted2) !important; }
+    .menu-hero h1  { color: var(--cream) !important; }
+    .menu-hero p   { color: var(--muted2) !important; }
+    .menu-hero h1 em { color: var(--champagne) !important; }
+    .menu-tab-btn  { color: var(--muted) !important; }
+    .menu-tab-btn.active { color: var(--champagne) !important; }
+
+    /* ─── KITCHEN HERO ─── */
+    .kitchen-hero-text h1 { color: var(--cream) !important; }
+    .kitchen-hero-text h1 em { color: var(--champagne) !important; font-style: italic; }
+    .team-card-role { color: var(--rose) !important; }
+
+    /* ─── GALLERY ─── */
+    .gallery-header .display-title { color: var(--cream) !important; }
+    .gallery-header .body-text     { color: rgba(242,237,228,0.6) !important; }
+
+    /* ─── NEWSLETTER INPUT ─── */
+    .newsletter-input { color: var(--cream) !important; }
+    .newsletter-input::placeholder { color: #555 !important; }
+
+    /* ─── INTRO STRIP ─── */
+    .intro-strip-item { color: var(--obsidian) !important; }
+
+    /* ─── FOOTER BRAND LOGO ─── */
+    .footer-brand-logo { color: var(--champagne) !important; }
+
+    /* ─── BTN GHOST ─── */
+    .btn-ghost { color: rgba(242,237,228,0.65) !important; }
+    .btn-ghost:hover { color: var(--cream) !important; opacity: 1 !important; }
+
+    /* ─── CTA CONTENT ─── */
+    .cta-content .display-title { color: var(--cream) !important; }
+    .cta-content .body-text     { color: rgba(242,237,228,0.6) !important; }
 
   </style>
 </head>
